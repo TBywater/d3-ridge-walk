@@ -3,7 +3,7 @@
   import * as d3 from "d3"
   
   import data from "./pbility.json"
-      import { onMount } from "svelte";
+      import { onDestroy, onMount } from "svelte";
 
       import Svelecte from 'svelecte';
 
@@ -14,23 +14,51 @@
 var ray = data.map( function( value) { return value.index
 });
 
-var ray_choix = ray.map(a => `name: '${a}'`).join(',');
-
+// OVERLY COMPLEX DELIMINATION OF ARRAY >>
+//var ray_choix = ray.map(a => `{value: '${a}' '${a}'`).join('},');
 //var ray_son = toJSON();
 
 //delimiter = ","
-
-var ray_son = ray_choix.split(",");
-
-
-$: console.log(ray_son);
+//var ray_son = ray_choix.split(",");
+//$: console.log(ray_son);
 
 
-const lista = [ray_son]
+const lista = ray
 const listb = [{ name: 'Item 1' }, { name: 'Item 2'}];
 let aValue = null;
 let bValue = null;
 
+// Log selected ranges
+
+$: console.log(aValue);
+$: console.log(bValue);
+
+var numba = 0; 
+
+function changeGlobal(newVal){numba = newVal};
+
+function cyka(){
+
+if (aValue != null){
+
+  console.log("chazibieb");
+  var denIndx = ray.indexOf(aValue);
+  console.log(denIndx);
+  changeGlobal(denIndx);
+ 
+}
+
+$: console.log(numba);
+
+                }
+
+//var HBday = ray.findIndex();
+
+//$: console.log(HBday);
+
+
+
+// Find index of vals
 
   
   // set the dimensions and margins of the graph
@@ -56,6 +84,8 @@ var svg = d3.select("#attach-here").append("svg")
 
 
 
+
+
 // add the x Axis
 var x = d3.scaleLinear()
             .domain([0, 200])
@@ -71,7 +101,13 @@ var x = d3.scaleLinear()
   svg.append("g")
       .call(d3.axisLeft(y));
 
-      var obj = Object.values(data[0]);
+      //select densities
+
+     
+
+      var obj = Object.values(data[numba]);
+
+
       var objb = Object.values(data[1]);
       
       $: console.log(obj)
@@ -145,7 +181,7 @@ function kernelEpanechnikov(k) {
   <form style="display:block;">
     <label text="input 1">input 1</label>
 
-    <Svelecte options={lista} bind:value={aValue}></Svelecte>
+    <Svelecte options={lista} bind:value={aValue} on:change={cyka}></Svelecte>
     <Svelecte options={listb} bind:value={bValue}></Svelecte>
   </form>
   
