@@ -1,0 +1,6 @@
+{
+	"/": [],
+	"/route-r": [
+		"src/routes/route-r/+page.js"
+	]
+}
