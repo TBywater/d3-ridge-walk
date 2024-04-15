@@ -5,6 +5,31 @@
   import data from "./pbility.json"
       import { onMount } from "svelte";
 
+      import Svelecte from 'svelecte';
+
+//index titles for choice
+      $: console.log(data.map( function( value) { return value.index
+}))
+
+var ray = data.map( function( value) { return value.index
+});
+
+var ray_choix = ray.map(a => `name: '${a}'`).join(',');
+
+//var ray_son = toJSON();
+
+//delimiter = ","
+
+var ray_son = ray_choix.split(",");
+
+
+$: console.log(ray_son);
+
+
+const lista = [ray_son]
+const listb = [{ name: 'Item 1' }, { name: 'Item 2'}];
+let aValue = null;
+let bValue = null;
 
 
   
@@ -76,7 +101,8 @@ var x = d3.scaleLinear()
       )
       svg.append("text")
       .text(obj[0])
-      .attr("y", obj[5]);
+      .attr("y", obj[5])
+      .style("fill", "#69b3a2");
 
     svg.append("path")
       .attr("class", "mypath")
@@ -94,7 +120,8 @@ var x = d3.scaleLinear()
       svg.append("text")
       .text(objb[0])
       .attr("x", 200)
-      .attr("y", objb[5]);
+      .attr("y", objb[5])
+      .style("fill", "pink");
 
 })
 
@@ -115,11 +142,11 @@ function kernelEpanechnikov(k) {
   
   </script>
 
-  <form>
+  <form style="display:block;">
     <label text="input 1">input 1</label>
-    <input>
-    <label text="input 2">input 2</label>
-    <input>
+
+    <Svelecte options={lista} bind:value={aValue}></Svelecte>
+    <Svelecte options={listb} bind:value={bValue}></Svelecte>
   </form>
   
   <div id="attach-here"></div>
