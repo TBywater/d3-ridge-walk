@@ -1,0 +1,131 @@
+[
+    {"name":"flare.north.Auckland Airport","size":3938,"imports":["flare.south.Christchurch Airport","flare.south.Dunedin Airport","flare.north.Gisborne Airport","flare.north.Hawke's Bay Airport","flare.south.Invercargill Airport","flare.north.Kaitaia Airport","flare.north.Kapiti Coast Airport","flare.north.Kerikeri Airport", "flare.south.Nelson Airport",
+    "flare.north.New Plymouth Airport",
+    "flare.north.Palmerston North Airport",
+    "flare.south.Queenstown Airport",
+    "flare.north.Rotorua Airport",
+    "flare.north.Taupo Airport",
+    "flare.north.Tauranga Airport",
+    "flare.north.Wellington Airport",
+    "flare.north.Whakatāne Airport",
+    "flare.north.Whanganui Airport",
+    "flare.north.Whangarei Airport",
+    "flare.south.Woodbourne Airport"]},
+{"name":"flare.south.Dunedin Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"]},
+{"name":"flare.north.Gisborne Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Hawke's Bay Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.south.Invercargill Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Kaitaia Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport"
+]},
+{"name":"flare.north.Kapiti Coast Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Nelson Airport"
+]},
+{"name":"flare.north.Kerikeri Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport"
+]},
+{"name":"flare.south.Nelson Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport"
+]},
+{"name":"flare.north.New Plymouth Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Palmerston North Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport"
+]},
+{"name":"flare.south.Queenstown Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Rotorua Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Taupo Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Tauranga Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.north.Whakatāne Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport"
+]},
+{"name":"flare.north.Whanganui Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport"]},
+{"name":"flare.north.Whangarei Airport","size":2500,"imports":["flare.north.Auckland Airport"]},
+{"name":"flare.north.Hamilton Airport","size":2500,"imports":[
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.south.Hokitika Airport","size":2500,"imports":[
+  "flare.south.Christchurch Airport"
+]},
+{"name":"flare.south.Westport Airport","size":2500,"imports":["flare.north.Wellington Airport"]},
+{"name":"flare.south.Woodbourne Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.south.Nelson Airport","size":2500,"imports":["flare.north.Kapiti Coast Airport","flare.south.Christchurch Airport"]},
+{"name":"flare.south.Richard Pearse Airport","size":2500,"imports":[
+  "flare.north.Wellington Airport"
+]},
+{"name":"flare.south.Christchurch Airport","size":2500,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Dunedin Airport",
+  "flare.north.Hamilton Airport",
+  "flare.north.Hawke's Bay Airport",
+  "flare.south.Hokitika Airport",
+  "flare.south.Invercargill Airport",
+  "flare.north.Kapiti Coast Airport",
+  "flare.south.Nelson Airport",
+  "flare.north.New Plymouth Airport",
+  "flare.north.Palmerston North Airport",
+  "flare.south.Queenstown Airport",
+  "flare.north.Rotorua Airport",
+  "flare.north.Tauranga Airport",
+  "flare.north.Wellington Airport",
+  "flare.south.Woodbourne Airport"
+]},
+{"name":"flare.north.Wellington Airport","size":2000,"imports":[
+  "flare.north.Auckland Airport",
+  "flare.south.Christchurch Airport",
+  "flare.south.Dunedin Airport",
+  "flare.north.Gisborne Airport",
+  "flare.north.Hamilton Airport",
+  "flare.north.Hawke's Bay Airport",
+  "flare.south.Invercargill Airport",
+  "flare.south.Nelson Airport",
+  "flare.north.New Plymouth Airport",
+  "flare.south.Queenstown Airport",
+  "flare.south.Richard Pearse Airport",
+  "flare.north.Rotorua Airport",
+  "flare.north.Taupo Airport",
+  "flare.north.Tauranga Airport",
+  "flare.south.Westport Airport",
+  "flare.south.Woodbourne Airport"]}
+  ]
