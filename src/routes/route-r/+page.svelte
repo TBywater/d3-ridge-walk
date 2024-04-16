@@ -35,26 +35,25 @@ $: console.log(bValue);
 
 var numba = 0; 
 
+//Change val and update chart
 function changeGlobal(newVal){numba = newVal};
 
-function cyka(){
+
+function chng(){
 
 if (aValue != null){
 
-  console.log("chazibieb");
+  console.log("spaciba");
   var denIndx = ray.indexOf(aValue);
   console.log(denIndx);
   changeGlobal(denIndx);
- 
+//const dUpdate = d3.selectAll('.route-one').remove();
+
 }
 
 $: console.log(numba);
 
                 }
-
-//var HBday = ray.findIndex();
-
-//$: console.log(HBday);
 
 
 
@@ -103,15 +102,21 @@ var x = d3.scaleLinear()
 
       //select densities
 
-     
 
-      var obj = Object.values(data[numba]);
+if (aValue != null){  
+
+  var obj = Object.values(data[0]);
+
+      } else { var obj = Object.values(data[numba]);}
 
 
       var objb = Object.values(data[1]);
       
       $: console.log(obj)
       $: console.log(objb)
+
+
+ 
       
 
       // Compute kernel density estimation
@@ -128,6 +133,7 @@ var x = d3.scaleLinear()
       .attr("fill", "#69b3a2")
       .attr("opacity", ".3")
       .attr("stroke", "#000")
+      .attr("class","route-one")
       .attr("stroke-width", 2)
       .attr("stroke-linejoin", "round")
       .attr("d",  d3.line()
@@ -146,6 +152,7 @@ var x = d3.scaleLinear()
       .attr("fill", "pink")
       .attr("opacity", ".3")
       .attr("stroke", "#000")
+      .attr("class","route-two")
       .attr("stroke-width", 2)
       .attr("stroke-linejoin", "round")
       .attr("d",  d3.line()
@@ -160,6 +167,8 @@ var x = d3.scaleLinear()
       .style("fill", "pink");
 
 })
+
+
 
 // Function to compute density
 function kernelDensityEstimator(kernel, X) {
@@ -181,7 +190,7 @@ function kernelEpanechnikov(k) {
   <form style="display:block;">
     <label text="input 1">input 1</label>
 
-    <Svelecte options={lista} bind:value={aValue} on:change={cyka}></Svelecte>
+    <Svelecte options={lista} bind:value={aValue} on:change={chng}></Svelecte>
     <Svelecte options={listb} bind:value={bValue}></Svelecte>
   </form>
   
