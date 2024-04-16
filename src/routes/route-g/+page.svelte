@@ -2,16 +2,16 @@
 
   import * as d3 from "d3"
   
-  import data from "./pbility.json"
+  import data from "./profile.json"
       import { onDestroy, onMount } from "svelte";
 
       import Svelecte from 'svelecte';
 
 //index titles for choice
-      $: console.log(data.map( function( value) { return value.index
+      $: console.log(data.map( function( value) { return value.Name
 }))
 
-var ray = data.map( function( value) { return value.index
+var ray = data.map( function( value) { return value.Name
 });
 
 // OVERLY COMPLEX DELIMINATION OF ARRAY >>
@@ -47,7 +47,7 @@ if (aValue != null){
   var denIndx = ray.indexOf(aValue);
   console.log(denIndx);
   changeGlobal(denIndx);
-const dUpdate = d3.selectAll('.route-one').remove();
+//const dUpdate = d3.selectAll('.route-one').remove();
 
 }
 
@@ -87,7 +87,7 @@ var svg = d3.select("#attach-here").append("svg")
 
 // add the x Axis
 var x = d3.scaleLinear()
-            .domain([0, 200])
+            .domain([-200, 1600])
             .range([0, width]);
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -96,7 +96,7 @@ var x = d3.scaleLinear()
   // add the y Axis
   var y = d3.scaleLinear()
             .range([height, 0])
-            .domain([0, 0.05]);
+            .domain([0, 0.003]);
   svg.append("g")
       .call(d3.axisLeft(y));
 
@@ -105,7 +105,7 @@ var x = d3.scaleLinear()
 
       var obj = Object.values(data[numba]);
 
-      var objb = Object.values(data[1]);
+      var objb = Object.values(data[6]);
       
       $: console.log(obj)
       $: console.log(objb)
@@ -115,7 +115,7 @@ var x = d3.scaleLinear()
       
 
       // Compute kernel density estimation
-  var kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40))
+  var kde = kernelDensityEstimator(kernelEpanechnikov(190), x.ticks(1000))
   var density1 =  kde( obj )
   var density2 =  kde( objb )
   
@@ -138,7 +138,6 @@ var x = d3.scaleLinear()
       )
       svg.append("text")
       .text(obj[0])
-      .attr("y", obj[5])
       .style("fill", "#69b3a2");
 
     svg.append("path")
@@ -158,7 +157,6 @@ var x = d3.scaleLinear()
       svg.append("text")
       .text(objb[0])
       .attr("x", 200)
-      .attr("y", objb[5])
       .style("fill", "pink");
 
 })

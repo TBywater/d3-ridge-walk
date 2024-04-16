@@ -1,3 +1,3 @@
-import * as universal from "../../../../src/routes/mikes-cluster/+page.js";
+import * as universal from "../../../../src/routes/route-r/+page.js";
 export { universal };
-export { default as component } from "../../../../src/routes/mikes-cluster/+page.svelte";
+export { default as component } from "../../../../src/routes/route-r/+page.svelte";
