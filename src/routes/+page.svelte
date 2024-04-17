@@ -3,17 +3,116 @@
   import * as d3 from "d3"
   
   import data from "./pbility.json"
-      import { onMount } from "svelte";
+      import { onDestroy, onMount } from "svelte";
+
+      import Svelecte from 'svelecte';
+
+//index titles for choice
+      $: console.log(data.map( function( value) { return value.index
+}))
+
+var ray = data.map( function( value) { return value.index
+});
 
 
-
-  
   // set the dimensions and margins of the graph
-var margin = {top: 80, right: 30, bottom: 50, left:110},
+  var margin = {top: 80, right: 30, bottom: 50, left:110},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
+
+const lista = ray
+const listb = ray
+let aValue = null;
+let bValue = null;
+
+// Log selected ranges
+
+$: console.log(aValue);
+$: console.log(bValue);
+
+var numba = 0;
+var numbb = 1; 
+
+var obj = Object.values(data[numba]);
+
+var objb = Object.values(data[numbb]);
+
+$: console.log(obj)
+$: console.log(objb)
+
+
+//x & y
+
+var x = d3.scaleLinear()
+            .domain([0, 200])
+            .range([0, width]);
+
+var y = d3.scaleLinear()
+            .range([height, 0])
+            .domain([0, 0.05]);            
+
+     // Compute kernel density estimation
+     var kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40))
+  var density1 =  kde( obj )
+  var density2 =  kde( objb )
+
+
+
+//Change val and update chart
+function changeGlobal(newVal){numba = newVal};
+
+function chng(){
+
+if (aValue != null){
+
+  console.log("spaciba");
+  var denIndx = ray.indexOf(aValue);
+  console.log(denIndx);
+  changeGlobal(denIndx);
+// const dUpdate = d3.selectAll('.route-one').remove();
+
+
+
+d3.selectAll('.route-one').join(
+  function(enter) {
+    return enter
+      .text(obj[0])
+      .datum(density1)
+      .attr("d",  d3.line()
+        .curve(d3.curveBasis)
+          .x(function(d) { return x(d[0]); })
+          .y(function(d) { return y(d[1]); })
+      );
+  
+  },
+  function(update) {
+    return update.text(obj[numba])
+    .datum(density2)
+    .attr("d",  d3.line()
+        .curve(d3.curveBasis)
+          .x(function(d) { return x(d[0]); })
+          .y(function(d) { return y(d[1]); })
+      );
+   
+  }
+)
+
+}
+
+$: console.log(numba);
+
+                }
+
+
+
+// Find index of vals
+
+  
+
 // append the svg object to the body of the page
+
+
 
   onMount(() => {
 var svg = d3.select("#attach-here").append("svg")
@@ -32,111 +131,90 @@ var svg = d3.select("#attach-here").append("svg")
 
 
 
-//test text
-  d3.select("g").append("text")
-  .text("oi moi");
-  d3.select("g").append("text")
-  .data(data)
-  .text( function (d){return d['index']});
 
-   // Get the different categories and count them
-   var categories = ["Almost Certainly", "Very Good Chance", "We Believe", "Likely", "About Even", "Little Chance", "Chances Are Slight", "Almost No Chance" ]
-  var n = categories.length
+// add the x Axis
 
-
-
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([-10, 120])
-    .range([ 0, width ]);
   svg.append("g")
-    .attr("class", "xAxis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).tickValues([0,25, 50, 75, 80]).tickSize(-height) )
-    .select(".domain").remove()
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-    // Add X axis label:
-  svg.append("text")
-      .attr("text-anchor", "end")
-      .attr("x", width)
-      .attr("y", height + 40)
-      .text("Probability (%)");
+  // add the y Axis
 
-      // Create a Y scale for densities
-  var y = d3.scaleLinear()
-    .domain([0, 0.25])
-    .range([ height, 0]);
-
-     // Create the Y axis for names
-  var yName = d3.scaleBand()
-    .domain(categories)
-    .range([0, height])
-    .paddingInner(1)
   svg.append("g")
-    .call(d3.axisLeft(yName).tickSize(0))
-    .select(".domain").remove()
+      .call(d3.axisLeft(y));
 
+      //select densities
 
-    // Compute kernel density estimation for each column:
-//  var kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40)) // increase this 40 for more accurate density.
-  var allDensity = []
-
-
-  allDensity.push(data.map(function(d){  return toString(d[0]); }))
-
-// allDensity.push({key: key, density: density});
-// for (i = 0; i < n; i++) {
-//key = categories[i]
-//      density = kde( data.map(function(d){  return d[key]; }) )
-//     allDensity.push({key: key, density: density})
-//  }
-
-//check data
-
-
-$: console.log(allDensity)
-
-
-
-
-
-  // Add areas
-  svg.selectAll("areas")
-    .data(data)
-    .enter()
-    .append("path")
-      .attr("transform", data.map(function(d){return("translate(0," + (d.k1) +")" )}))
-      .attr("fill", "#000")
-      .datum(function(d){return d['k1']})
-      .attr("opacity", 0.7)
-      .attr("stroke", "#000")
-      .attr("stroke-width", 1)
-      .attr("d",  d3.line()
-          .curve(d3.curveBasis)
-          .x(function(d) { return x(d.key); })
-          .y(function(d) { return y(d.key+2); })
-      )
-
-   
   
+  $: console.log(density1)
+ 
+
+  // Plot the area
+  svg.append("path")
+      .attr("class", "mypath1")
+      .attr("fill", "#69b3a2")
+      .attr("opacity", ".3")
+      .attr("stroke", "#000")
+      .attr("stroke-width", 2)
+      .attr("stroke-linejoin", "round")
+      .datum(density1)
+      .attr("d",  d3.line()
+        .curve(d3.curveBasis)
+          .x(function(d) { return x(d[0]); })
+          .y(function(d) { return y(d[1]); })
+      )
+      svg.append("text")
+      .text(obj[0])
+      .attr("class","route-one")
+      .style("fill", "#69b3a2");
+
+    svg.append("path")
+      .attr("class", "mypath2")
+      .attr("fill", "pink")
+      .attr("opacity", ".3")
+      .attr("stroke", "#000")
+      .attr("stroke-width", 2)
+      .attr("stroke-linejoin", "round")
+      .datum(density2)
+      .attr("d",  d3.line()
+        .curve(d3.curveBasis)
+          .x(function(d) { return x(d[0]); })
+          .y(function(d) { return y(d[1]); })
+      )
+      svg.append("text")
+      .text(objb[0])
+      .attr("x", 200)
+      .attr("y", objb[1])
+      .attr("class","route-two")
+      .style("fill", "pink");
 
 })
 
-// This is what I need to compute kernel density estimation
-//function kernelDensityEstimator(kernel, X) {
-//  return function(V) {
-//    return X.map(function(x) {
-//      return [x, d3.mean(V, function(v) { return kernel(x - v); })];
-//    });
-//  };
-//}
-//function kernelEpanechnikov(k) {
-//  return function(v) {
-//    return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
-//  };
-//}
+
+
+// Function to compute density
+function kernelDensityEstimator(kernel, X) {
+  return function(V) {
+    return X.map(function(x) {
+      return [x, d3.mean(V, function(v) { return kernel(x - v); })];
+    });
+  };
+}
+function kernelEpanechnikov(k) {
+  return function(v) {
+    return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
+  };
+}
+
   
   </script>
+
+  <form style="display:block;">
+    <label text="input 1">input 1</label>
+
+    <Svelecte options={lista} bind:value={aValue} on:change={chng}></Svelecte>
+    <Svelecte options={listb} bind:value={bValue}></Svelecte>
+  </form>
   
   <div id="attach-here"></div>
   
