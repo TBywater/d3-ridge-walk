@@ -34,11 +34,12 @@
 
   let numba = 0;
   let numbb = 1;
+  let svgNode;
   $: obj = Object.values(data[numba]) || [];
   $: objb = Object.values(data[numbb]) || [];
 
-  $: console.log("obi", obj);
-  $: console.log(objb);
+  //$: console.log("obi", obj);
+  //$: console.log(objb);
 
   //x & y
 
@@ -49,6 +50,17 @@
   const kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40));
   $: density1 = kde(obj);
   $: density2 = kde(objb);
+
+  const densityToPath = d3
+    .line()
+    .curve(d3.curveBasis)
+    .x(function (d) {
+      return x(d[0]);
+    })
+    .y(function (d) {
+      return y(d[1]);
+    });
+  $: density1path = densityToPath(density1);
 
   //Change val and update chart
   function changeGlobal(newVal) {
@@ -62,6 +74,7 @@
       console.log(denIndx);
       changeGlobal(denIndx);
       // const dUpdate = d3.selectAll('.route-one').remove();
+      // this function can stop heere
 
       d3.selectAll(".path-1").join(
         function (enter) {
@@ -108,7 +121,7 @@
   // append the svg object to the body of the page
 
   onMount(() => {
-    var svg = d3
+    /*var svg = d3
       .select("#attach-here")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -118,11 +131,13 @@
     //          async () => {
     //			data = await d3.csv('https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv')
     //		}
-
+*/
     //check data
     console.log(data);
 
     // add the x Axis
+
+    const svg = d3.select(svgNode);
 
     svg
       .append("g")
@@ -135,9 +150,8 @@
 
     //select densities
 
-    console.log(density1);
-
     // Plot the area
+    /*
     const p1 = svg.append("g").attr("class", "path-1");
     p1.append("path")
       .attr("class", "mypath1")
@@ -163,7 +177,7 @@
       .text(obj[0])
       .attr("class", "route-one")
       .style("fill", "#69b3a2");
-
+*/
     svg
       .append("path")
       .attr("class", "mypath2")
@@ -222,7 +236,27 @@
   <Svelecte options={listb} bind:value={bValue}></Svelecte>
 </form>
 
-<div id="attach-here"></div>
+<div>
+  <svg
+    width={width + margin.left + margin.right}
+    height={height + margin.top + margin.bottom}
+  >
+    <g transform="translate({margin.left},{margin.top})" bind:this={svgNode}>
+      <g>
+        <path
+          fill="#69b3a2"
+          opacity=".3"
+          stroke="#000"
+          stroke-width="2"
+          stroke-linejoin="round"
+          d={density1path}
+        >
+        </path>
+        <text style="fill: #69b3a2;">{obj[0]}</text>
+      </g>
+    </g>
+  </svg>
+</div>
 
 <style>
   :global(.node) {
