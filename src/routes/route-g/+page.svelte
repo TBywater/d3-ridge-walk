@@ -39,31 +39,23 @@ var numba = 0;
 function changeGlobal(newVal){numba = newVal};
 
 
-function chng(){
-
-if (aValue != null){
-
-  console.log("spaciba");
-  var denIndx = ray.indexOf(aValue);
-  console.log(denIndx);
-  changeGlobal(denIndx);
-//const dUpdate = d3.selectAll('.route-one').remove();
-
-}
-
-$: console.log(numba);
-
-                }
 
 
 
 // Find index of vals
+
+
 
   
   // set the dimensions and margins of the graph
 var margin = {top: 80, right: 30, bottom: 50, left:110},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
+
+
+
+
+    
 
 // append the svg object to the body of the page
 
@@ -102,9 +94,7 @@ var x = d3.scaleLinear()
 
       //select densities
 
-
-      var obj = Object.values(data[numba]);
-
+      var obj = Object.values(data[0]);
       var objb = Object.values(data[6]);
       
       $: console.log(obj)
@@ -118,6 +108,7 @@ var x = d3.scaleLinear()
   var kde = kernelDensityEstimator(kernelEpanechnikov(190), x.ticks(1000))
   var density1 =  kde( obj )
   var density2 =  kde( objb )
+
   
   $: console.log(density1)
 
@@ -157,11 +148,12 @@ var x = d3.scaleLinear()
       svg.append("text")
       .text(objb[0])
       .attr("x", 200)
+      .attr("class","route-two")
       .style("fill", "pink");
 
+    
+
 })
-
-
 
 // Function to compute density
 function kernelDensityEstimator(kernel, X) {
@@ -176,6 +168,37 @@ function kernelEpanechnikov(k) {
     return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
   };
 }
+
+
+function chng(){
+
+if (aValue != null){
+
+  console.log("spaciba");
+  var denIndx = ray.indexOf(aValue);
+  console.log(denIndx);
+  changeGlobal(denIndx);
+// const dUpdate = d3.selectAll('.route-one').remove();
+
+d3.selectAll('.route-two').join(
+  function(enter) {
+    return enter
+    .append("text");
+  
+  },
+  function(update) {
+    return update.text("Koooo")
+   
+  }
+)
+
+}
+
+
+
+$: console.log(numba);
+
+                }
 
   
   </script>
