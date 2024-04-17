@@ -1,9 +1,0 @@
-{
-	"/": [],
-	"/route-g": [
-		"src/routes/route-g/+page.js"
-	],
-	"/route-r": [
-		"src/routes/route-r/+page.js"
-	]
-}
