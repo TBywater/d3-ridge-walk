@@ -1,6 +1,6 @@
 [
     {
-      "Name": "Milford",
+      "index": "Milford",
       "K1": 238.2,
       "K2": 224.6,
       "K3": 232.2,
@@ -81,7 +81,7 @@
       "K78": 0
     },
     {
-      "Name": "Routeburn",
+      "index": "Routeburn",
       "K1": 556.6,
       "K2": 601.5,
       "K3": 725.5,
@@ -162,7 +162,7 @@
       "K78": 0
     },
     {
-      "Name": "Tongariro",
+      "index": "Tongariro",
       "K1": 1109.1,
       "K2": 1149.5,
       "K3": 1130.7,
@@ -243,7 +243,7 @@
       "K78": 0
     },
     {
-      "Name": "Rakiura",
+      "index": "Rakiura",
       "K1": 21.4,
       "K2": 27.5,
       "K3": 30.2,
@@ -324,7 +324,7 @@
       "K78": 0
     },
     {
-      "Name": "Hump Ridge",
+      "index": "Hump Ridge",
       "K1": 58.6,
       "K2": 60.9,
       "K3": 4.5,
@@ -405,7 +405,7 @@
       "K78": 0
     },
     {
-      "Name": "Wanganui River",
+      "index": "Wanganui River",
       "K1": 158.6,
       "K2": 151,
       "K3": 142.2,
@@ -486,7 +486,7 @@
       "K78": 0
     },
     {
-      "Name": "Paparoa",
+      "index": "Paparoa",
       "K1": 290.6,
       "K2": 272.5,
       "K3": 284.9,
@@ -567,7 +567,7 @@
       "K78": 0
     },
     {
-      "Name": "Kepler",
+      "index": "Kepler",
       "K1": 230.1,
       "K2": 238.6,
       "K3": 220.7,
@@ -648,7 +648,7 @@
       "K78": 0
     },
     {
-      "Name": "Abel Tasman",
+      "index": "Abel Tasman",
       "K1": 21.3,
       "K2": 5,
       "K3": 46.8,
@@ -729,7 +729,7 @@
       "K78": 0
     },
     {
-      "Name": "Heaphy",
+      "index": "Heaphy",
       "K1": 186,
       "K2": 254.7,
       "K3": 336.9,
@@ -810,7 +810,7 @@
       "K78": 20
     },
     {
-      "Name": "Lake Waikaremoana",
+      "index": "Lake Waikaremoana",
       "K1": 731.3,
       "K2": 952.1,
       "K3": 1102.2,

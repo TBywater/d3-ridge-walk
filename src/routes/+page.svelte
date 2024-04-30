@@ -61,10 +61,15 @@
       return y(d[1]);
     });
   $: density1path = densityToPath(density1);
+  $: density2path = densityToPath(density2);
 
   //Change val and update chart
   function changeGlobal(newVal) {
     numba = newVal;
+  }
+
+  function changeBlobal(newVal) {
+    numbb = newVal;
   }
 
   function chng() {
@@ -99,6 +104,55 @@
           return update
             .text(obj[numba])
             .datum(density1)
+            .attr(
+              "d",
+              d3
+                .line()
+                .curve(d3.curveBasis)
+                .x(function (d) {
+                  return x(d[0]);
+                })
+                .y(function (d) {
+                  return y(d[1]);
+                })
+            );
+        }
+      );
+    }
+  }
+
+  function chngb() {
+    if (bValue != null) {
+      console.log("spaciba");
+      var denIndx = ray.indexOf(bValue);
+      console.log(denIndx);
+      changeBlobal(denIndx);
+      // const dUpdate = d3.selectAll('.route-one').remove();
+      // this function can stop heere
+
+      d3.selectAll(".path-2").join(
+        function (enter) {
+          console.log("entered route two", objb);
+          return enter
+            .text(objb[0])
+            .datum(density2)
+            .attr(
+              "d",
+              d3
+                .line()
+                .curve(d3.curveBasis)
+                .x(function (d) {
+                  return x(d[0]);
+                })
+                .y(function (d) {
+                  return y(d[1]);
+                })
+            );
+        },
+        function (update) {
+          return update
+            .text(objb[numbb])
+            .datum(density2)
             .attr(
               "d",
               d3
@@ -178,34 +232,8 @@
       .attr("class", "route-one")
       .style("fill", "#69b3a2");
 */
-    svg
-      .append("path")
-      .attr("class", "mypath2")
-      .attr("fill", "pink")
-      .attr("opacity", ".3")
-      .attr("stroke", "#000")
-      .attr("stroke-width", 2)
-      .attr("stroke-linejoin", "round")
-      .datum(density2)
-      .attr(
-        "d",
-        d3
-          .line()
-          .curve(d3.curveBasis)
-          .x(function (d) {
-            return x(d[0]);
-          })
-          .y(function (d) {
-            return y(d[1]);
-          })
-      );
-    svg
-      .append("text")
-      .text(objb[0])
-      .attr("x", 200)
-      .attr("y", objb[1])
-      .attr("class", "route-two")
-      .style("fill", "pink");
+    
+
   });
 
   // Function to compute density
@@ -233,7 +261,7 @@
   <label text="input 1">input 1</label>
 
   <Svelecte options={lista} bind:value={aValue} on:change={chng}></Svelecte>
-  <Svelecte options={listb} bind:value={bValue}></Svelecte>
+  <Svelecte options={listb} bind:value={bValue} on:change={chngb}></Svelecte>
 </form>
 
 <div>
@@ -253,6 +281,21 @@
         >
         </path>
         <text style="fill: #69b3a2;">{obj[0]}</text>
+      </g>
+    </g>
+
+    <g transform="translate({margin.left},{margin.top})" bind:this={svgNode}>
+      <g>
+        <path
+          fill="blue"
+          opacity=".3"
+          stroke="#000"
+          stroke-width="2"
+          stroke-linejoin="round"
+          d={density2path}
+        >
+        </path>
+        <text style="fill: blue;" transform="translate({margin.left+50})">{objb[0]}</text>
       </g>
     </g>
   </svg>
