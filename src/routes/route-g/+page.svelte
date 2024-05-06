@@ -1,232 +1,200 @@
 <script>
-
-  import * as d3 from "d3"
-  
-  import data from "./profile.json"
-      import { onDestroy, onMount } from "svelte";
-
-      import Svelecte from 'svelecte';
-
-//index titles for choice
-      $: console.log(data.map( function( value) { return value.Name
-}))
-
-var ray = data.map( function( value) { return value.Name
-});
-
-// OVERLY COMPLEX DELIMINATION OF ARRAY >>
-//var ray_choix = ray.map(a => `{value: '${a}' '${a}'`).join('},');
-//var ray_son = toJSON();
-
-//delimiter = ","
-//var ray_son = ray_choix.split(",");
-//$: console.log(ray_son);
-
-
-const lista = ray
-const listb = [{ name: 'Item 1' }, { name: 'Item 2'}];
-let aValue = null;
-let bValue = null;
-
-// Log selected ranges
-
-$: console.log(aValue);
-$: console.log(bValue);
-
-var numba = 0; 
-
-//Change val and update chart
-function changeGlobal(newVal){numba = newVal};
-
-
-
-
-
-// Find index of vals
-
-
+  import { area, curveBasis, extent, max, quantize, interpolateCool, scaleLinear, scalePoint, scaleTime} from 'd3';
+  import data from './ridgeline-data' // or pass data to component as prop
+  import { fade, blur, fly, slide, scale } from "svelte/transition";
+  import { flip } from 'svelte/animate';
 
   
-  // set the dimensions and margins of the graph
-var margin = {top: 80, right: 30, bottom: 50, left:110},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+  const width = 1200; // the outer width of the chart, in pixels 
+  const overlap = 1; // the overlap between each ridgeline
+  let verticalScale = 50; // the vertical spacing between each y axis ticks
+  let height = data.series.length * verticalScale;
+  const marginTop = 40; // the top margin, in pixels
+  const marginRight = 0; // the right margin, in pixels
+  const marginBottom = 40; // the bottom margin, in pixels
+  const marginLeft = 60; // the left margin, in pixels
+  const yAxisOffset = 0; // vertical offset of y-axis labels, in pixels
+  let Track = ''
+  let Cola = 'rgb(54, 140, 225)'
+  let Pat = ''
+
+  console.log("data:", data.kms);
+
+  const xScale = scaleLinear()
+    .domain(data.kms)
+    .range([width, width - marginRight-15]);
+
+    //[width, width - marginRight-15]
+
+  const yScale = scalePoint()
+    .domain(data.series.map(d => d.name))
+    .range([marginTop, height - marginBottom]);
+
+  const zScale = scaleLinear()
+    .domain([0, max(data.series, d => max(d.values))]).nice()
+    .range([0, -overlap * yScale.step()]);
+
+  const xTicks = xScale.ticks(width / 100);
+  const xTicksFormatted = xTicks.map(xScale.tickFormat());
+
+  const colors = quantize(t => interpolateCool(t * 1 + 0.3), data.series.length);
+
+  const areaFunc = area()
+    .curve(curveBasis)
+    .defined(d => !isNaN(d))
+    .x((d, i) => xScale(data.kms[i]))
+    .y0(0)
+    .y1(d => zScale(d));
+
+        
+  const lineFunc = areaFunc.lineY1();
+
+//  function myFunction() {
+//  console.log("i've been clicked")
+//};
 
 
 
+let active = false, navigating = false;
 
-    
-
-// append the svg object to the body of the page
-
-  onMount(() => {
-var svg = d3.select("#attach-here").append("svg")
-.attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-//          async () => {
-//			data = await d3.csv('https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv')
-//		}
-
- //check data
-  $: console.log(data)
+function simulateNavigation() {		
+		navigating = true
+		console.log("clicked", navigating);
+		setTimeout(() => { // Reset
+			navigating = false;
+			active = false;
+      alert(`This is ${Track}`);
+		}, 2000)
+	};
 
 
 
+</script>
 
+<h1 class:active on:mouseenter={() => {
+	console.log("enter", navigating);
+	if (!navigating) {
+		active = true;
+	}
+}}
+on:mouseleave={() => {
+	console.log("leave", navigating);
+	if (!navigating) {
+		active = false;
+	}
+}} style="color:{Cola};" >Pick your Great Walk: {Track}</h1>
 
-// add the x Axis
-var x = d3.scaleLinear()
-            .domain([-200, 1600])
-            .range([0, width]);
-  svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+<pre>
+  Active: {active}
+  Navigating: {navigating}
+  Track: {Track}
+  Fill: {Cola}
+  Path: {Pat}
+</pre>
+  
+<div class="scatter_plot_container">
+  <svg {width} {height} viewBox="0 0 {width + marginLeft} {height}">
+    <g class="y-axis" transform="translate({marginLeft}, 0)">
+      {#each data.series as series, i}
+        <g class="y-tick" transform="translate({marginLeft - 10}, {yScale(series.name)})">
+          <line class="tick-start" x1={marginLeft - 6} x2={marginLeft}/>
+          <line class="tick-grid" x1={marginLeft} x2={width - marginLeft - marginRight}/>
+          <text y={yAxisOffset}>{series.name}</text>
+        </g>
+      {/each}
+    </g>
 
-  // add the y Axis
-  var y = d3.scaleLinear()
-            .range([height, 0])
-            .domain([0, 0.003]);
-  svg.append("g")
-      .call(d3.axisLeft(y));
-
-      //select densities
-
-      var obj = Object.values(data[0]);
-      var objb = Object.values(data[6]);
+    <g class="x-axis" transform="translate(0,{height - marginBottom})">
+      {#each xTicks as tick, i}
+        <g class="x-tick" transform="translate({marginLeft + xScale(tick)}, 0)">
+          <line class="tick-start" stroke='black' y2='6' />
+            <text y="10">{xTicksFormatted[i]}</text>
+        </g>
+      {/each}
+    </g>
       
-      $: console.log(obj)
-      $: console.log(objb)
+      {#each data.series as series, i}
+        <g class='ridgelines' transform="translate({marginLeft}, {yScale(series.name) + 1})">
+          <path
 
-
- 
-      
-
-      // Compute kernel density estimation
-  var kde = kernelDensityEstimator(kernelEpanechnikov(190), x.ticks(1000))
-  var density1 =  kde( obj )
-  var density2 =  kde( objb )
-
-  
-  $: console.log(density1)
-
-  // Plot the area
-  svg.append("path")
-      .attr("class", "mypath")
-      .datum(density1)
-      .attr("fill", "#69b3a2")
-      .attr("opacity", ".3")
-      .attr("stroke", "#000")
-      .attr("class","route-one")
-      .attr("stroke-width", 2)
-      .attr("stroke-linejoin", "round")
-      .attr("d",  d3.line()
-        .curve(d3.curveBasis)
-          .x(function(d) { return x(d[0]); })
-          .y(function(d) { return y(d[1]); })
-      )
-      svg.append("text")
-      .text(obj[0])
-      .style("fill", "#69b3a2");
-
-    svg.append("path")
-      .attr("class", "mypath")
-      .datum(density2)
-      .attr("fill", "pink")
-      .attr("opacity", ".3")
-      .attr("stroke", "#000")
-      .attr("class","route-two")
-      .attr("stroke-width", 2)
-      .attr("stroke-linejoin", "round")
-      .attr("d",  d3.line()
-        .curve(d3.curveBasis)
-          .x(function(d) { return x(d[0]); })
-          .y(function(d) { return y(d[1]); })
-      )
-      svg.append("text")
-      .text(objb[0])
-      .attr("x", 200)
-      .attr("class","route-two")
-      .style("fill", "pink");
-
-    
-
-})
-
-// Function to compute density
-function kernelDensityEstimator(kernel, X) {
-  return function(V) {
-    return X.map(function(x) {
-      return [x, d3.mean(V, function(v) { return kernel(x - v); })];
-    });
-  };
-}
-function kernelEpanechnikov(k) {
-  return function(v) {
-    return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
-  };
-}
-
-
-function chng(){
-
-if (aValue != null){
-
-  console.log("spaciba");
-  var denIndx = ray.indexOf(aValue);
-  console.log(denIndx);
-  changeGlobal(denIndx);
-// const dUpdate = d3.selectAll('.route-one').remove();
-
-d3.selectAll('.route-two').join(
-  function(enter) {
-    return enter
-    .append("text");
-  
-  },
-  function(update) {
-    return update.text("Koooo")
-   
-  }
-)
-
-}
-
-
-
-$: console.log(numba);
-
+              d={areaFunc(series.values)}
+              on:mouseenter={() => {
+                console.log("enter", navigating);
+                if (!navigating) {
+                  active = true;
                 }
+              }} 
+              on:mouseleave={() => {
+                console.log("leave", navigating);
+                if (!navigating) {
+                  active = false;
+                }
+              }} on:click={(event) => Track = event.target.id} on:click={simulateNavigation}
+              on:mouseenter|self={(event) => event.target.style.transform = "scaleY(1.5)"}
+              
+              on:mouseleave|self={(event) => event.target.style.transform = "scaleY(1)"}
+              on:mouseenter={(event) => Cola = event.target.attributes["fill"].value}
+              on:mouseenter={(event) => Pat = event.target.attributes["d"].value}
+              fill={colors[i]}
+              name={colors[i]}
+              id={series.name}
+              cursor = pointer
+              
+              use = animationAction              
+          ></path>
+          <path
+              stroke='black'
+              fill='none'
+              d={lineFunc(series.values)}
 
-  
-  </script>
+          ></path>
+        </g>
+      {/each}
+  </svg>
+</div>
 
-  <form style="display:block;">
-    <label text="input 1">input 1</label>
+<style>
+  svg {
+    max-width: 100%;
+    height: auto;
+    height: "intrinsic";
+  }
 
-    <Svelecte options={lista} bind:value={aValue} on:change={chng}></Svelecte>
-    <Svelecte options={listb} bind:value={bValue}></Svelecte>
-  </form>
-  
-  <div id="attach-here"></div>
-  
-  <style>
-  
-      :global(.node) {
-        font: 0.6em sans-serif;
-      }
-      
-      :global(.link) {
-        stroke: steelblue;
-        stroke-opacity: 0.5;
-        fill: none;
-        pointer-events: none;
-        stroke-linejoin: miter;
-      }
-      
-      </style>
+  .y-axis {
+    font-size: "10px";
+    font-family: sans-serif;
+    text-anchor: "end";
+  }
 
+  .x-axis {
+    font-size: "10px";
+    font-family: sans-serif;
+    text-anchor: "end";
+  }
 
+  .tick-start {
+    stroke: black;
+    stroke-opacity: 1;
+  }
 
+  .tick-grid {
+    stroke: black;
+    stroke-opacity: 0.2;
+    font-size: "11px";
+    color: black;
+  }
+
+  .x-tick text {
+    fill: black;
+    text-anchor: middle;
+  }
+
+  .y-tick text {
+    fill: black;
+    text-anchor: end;
+  }
+
+  .Bctive {
+	background: rgb(54, 140, 225);
+}
+</style>
