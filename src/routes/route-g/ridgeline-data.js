@@ -10,6 +10,472 @@ Abel Tasman,21.3,5,46.8,49.7,41.7,22.6,46.6,58.7,27.4,69.1,103.9,113.5,127.1,101
 Heaphy,186,254.7,336.9,395.8,425.8,483.9,554.8,642.7,751.1,837.6,899.4,892.1,872.1,835.9,781.3,774.5,724.3,680.4,635.2,629.4,622.6,669.8,718.1,723.7,702,710.7,730.9,733.9,760.9,777.9,813.9,795.2,791,771,755.6,780.8,747.8,729.9,724.6,699.4,674,721,723.9,739.7,769.5,800.5,795.7,802.6,778.1,758.5,780.4,756.3,736.6,732,703.1,24.7,16.6,23.9,20.4,15.1,18.9,14.8,10.5,20.4,13.7,13.6,18.4,18.1,19.4,24.8,18.3,5.5,31.6,2.9,46.2,80.1,59.4,20
 Lake Waikaremoana,731.3,952.1,1102.2,1166,1105.8,1113.2,1167.4,1079.7,1073.6,908.6,749.3,652.7,603.9,598.3,599.8,590.8,613.3,600.8,657.2,667.4,669.4,606.6,625.6,616.1,597.7,610.4,617.3,606.7,656.6,613.2,613.1,598.8,623.4,673.3,646.1,615.9,612.8,615.7,635.5,629.4,596.2,623.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0`;
 
+const hutz = `[{"name":"Milford", "huts":[
+  {
+      "hut": "Clinton",
+      "type": "Hut",
+      "cap": "40",
+      "waypoint": "5"
+  },
+  {
+      "hut": "Mintaro",
+      "type": "Hut",
+      "cap": "40",
+      "waypoint": "22.5"
+  },
+  {
+      "hut": "Dumpling Hut",
+      "type": "Hut",
+      "cap": "40",
+      "waypoint": "35.5"
+  }]},
+  {"name":"Routeburn", "huts":[{
+    "hut": "Routeburn Flats",
+    "type": "Hut",
+    "cap": "20",
+    "waypoint": "7.5"
+},
+{
+    "hut": "Routeburn Flats",
+    "type": "Campsite",
+    "cap": "30",
+    "waypoint": "7.5"
+},
+{
+    "hut": "Routeburn Falls",
+    "type": "Hut",
+    "cap": "48",
+    "waypoint": "9.8"
+},
+{
+    "hut": "Lake Mackenzie",
+    "type": "Hut",
+    "cap": "50",
+    "waypoint": "21.1"
+},
+{
+    "hut": "Lake Mackenzie",
+    "type": "Campsite",
+    "cap": "18",
+    "waypoint": "21.1"
+}]},
+  {"name":"Tongariro", "huts":[{
+    "hut": "Mangatepopo",
+    "type": "Campsite",
+    "cap": "17",
+    "waypoint": "9.4"
+},
+{
+    "hut": "Oturere",
+    "type": "Hut",
+    "cap": "26",
+    "waypoint": "21.4"
+},
+{
+    "hut": "Oturere",
+    "type": "Campsite",
+    "cap": "14",
+    "waypoint": "21.4"
+},
+{
+    "hut": "Waihohonu",
+    "type": "Hut",
+    "cap": "28",
+    "waypoint": "29.5"
+},
+{
+    "hut": "Waihohonu",
+    "type": "Campsite",
+    "cap": "12",
+    "waypoint": "29.5"
+},
+{
+    "hut": "Whakapapa",
+    "type": "Campsite",
+    "cap": "32",
+    "waypoint": "44.9"
+}]},
+{"name":"Rakiura", "huts":[{
+  "hut": "Maori Beach",
+  "type": "Campsite",
+  "cap": "16",
+  "waypoint": "4"
+},
+{
+  "hut": "Port William",
+  "type": "Hut",
+  "cap": "24",
+  "waypoint": "12.1"
+},
+{
+  "hut": "Port William",
+  "type": "Campsite",
+  "cap": "16",
+  "waypoint": "12.1"
+},
+{
+  "hut": "North Arm",
+  "type": "Hut",
+  "cap": "24",
+  "waypoint": "25.1"
+},
+{
+  "hut": "North Arm Campsite",
+  "type": "Campsite",
+  "cap": "16",
+  "waypoint": "25.1"
+}]},
+{"name":"Hump Ridge", "huts":[{
+  "hut": "Okaka Lodge",
+  "type": "Hut",
+  "cap": "20",
+  "waypoint": "21"
+},
+{
+  "hut": "Port Craig Lodge",
+  "type": "Hut",
+  "cap": "20",
+  "waypoint": "42"
+}]},
+{"name":"Paparoa", "huts":[{
+  "hut": "Ces Clark",
+  "type": "Hut",
+  "cap": "20",
+  "waypoint": "10.3"
+},
+{
+  "hut": "Moonlight Tops",
+  "type": "Hut",
+  "cap": "20",
+  "waypoint": "20"
+},
+{
+  "hut": "Pororari Hut",
+  "type": "Hut",
+  "cap": "20",
+  "waypoint": "39.1"
+}]},
+{"name":"Kepler", "huts":[{
+  "hut": "Brod Bay",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "5.6"
+},
+{
+  "hut": "Luxmore",
+  "type": "Hut",
+  "cap": "54",
+  "waypoint": "13.8"
+},
+{
+  "hut": "Iris Burn",
+  "type": "Hut",
+  "cap": "50",
+  "waypoint": "28.4"
+},
+{
+  "hut": "Iris Burn",
+  "type": "Campsite",
+  "cap": "30",
+  "waypoint": "28.4"
+},
+{
+  "hut": "Moturau Hut",
+  "type": "Hut",
+  "cap": "40",
+  "waypoint": "44.6"
+}]},
+{"name":"Abel Tasman", "huts":[ {
+  "hut": "Tinline Campsite",
+  "type": "Campsite",
+  "cap": "30",
+  "waypoint": "0"
+},
+{
+  "hut": "Coquille Bay",
+  "type": "Campsite",
+  "cap": "12",
+  "waypoint": "0"
+},
+{
+  "hut": "Apple Tree Bay",
+  "type": "Campsite",
+  "cap": "30",
+  "waypoint": "0"
+},
+{
+  "hut": "Akersten Bay",
+  "type": "Campsite",
+  "cap": "6",
+  "waypoint": "0"
+},
+{
+  "hut": "Observation Beach",
+  "type": "Campsite",
+  "cap": "12",
+  "waypoint": "0"
+},
+{
+  "hut": "Watering Cove",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "0"
+},
+{
+  "hut": "Te Pukatea Bay",
+  "type": "Campsite",
+  "cap": "14",
+  "waypoint": "0"
+},
+{
+  "hut": "Anchorage",
+  "type": "Campsite",
+  "cap": "100",
+  "waypoint": "12.4"
+},
+{
+  "hut": "Anchorage",
+  "type": "Hut",
+  "cap": "34",
+  "waypoint": "12.4"
+},
+{
+  "hut": "Torrent Bay Village",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "12.4"
+},
+{
+  "hut": "Bark Bay",
+  "type": "Campsite",
+  "cap": "80",
+  "waypoint": "23.9"
+},
+{
+  "hut": "Bark Bay",
+  "type": "Hut",
+  "cap": "34",
+  "waypoint": "23.9"
+},
+{
+  "hut": "Mosquito Bay Campsite (boat only)",
+  "type": "Campsite",
+  "cap": "40",
+  "waypoint": "23.9"
+},
+{
+  "hut": "Onetahuti Bay",
+  "type": "Campsite",
+  "cap": "40",
+  "waypoint": "23.9"
+},
+{
+  "hut": "Awaroa",
+  "type": "Campsite",
+  "cap": "36",
+  "waypoint": "37.4"
+},
+{
+  "hut": "Awaroa",
+  "type": "Hut",
+  "cap": "26",
+  "waypoint": "37.4"
+},
+{
+  "hut": "Waiharakeke Bay",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "37.4"
+},
+{
+  "hut": "Totaranui Great Walk",
+  "type": "Campsite",
+  "cap": "40",
+  "waypoint": "44.5"
+},
+{
+  "hut": "Anapai Bay",
+  "type": "Campsite",
+  "cap": "12",
+  "waypoint": "44.5"
+},
+{
+  "hut": "Mutton Cove",
+  "type": "Campsite",
+  "cap": "40",
+  "waypoint": "44.5"
+},
+{
+  "hut": "Whariwharangi Bay",
+  "type": "Campsite",
+  "cap": "40",
+  "waypoint": "54"
+},
+{
+  "hut": "Whariwharangi Hut",
+  "type": "Hut",
+  "cap": "20",
+  "waypoint": "54"
+}]},
+{"name":"Heaphy", "huts":[{
+  "hut": "Brown",
+  "type": "Hut",
+  "cap": "16",
+  "waypoint": "0"
+},
+{
+  "hut": "Brown",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "0"
+},
+{
+  "hut": "Aorere",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "0"
+},
+{
+  "hut": "Perry Saddle",
+  "type": "Hut",
+  "cap": "28",
+  "waypoint": "17.5"
+},
+{
+  "hut": "Perry Saddle",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "17.5"
+},
+{
+  "hut": "Gouland Downs",
+  "type": "Hut",
+  "cap": "8",
+  "waypoint": "22.5"
+},
+{
+  "hut": "Gouland Downs",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "22.5"
+},
+{
+  "hut": "Saxon",
+  "type": "Hut",
+  "cap": "16",
+  "waypoint": "27.9"
+},
+{
+  "hut": "Saxon",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "27.9"
+},
+{
+  "hut": "James Mackay",
+  "type": "Hut",
+  "cap": "28",
+  "waypoint": "39.7"
+},
+{
+  "hut": "James Mackay",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "39.7"
+},
+{
+  "hut": "Heaphy",
+  "type": "Hut",
+  "cap": "32",
+  "waypoint": "60.2"
+},
+{
+  "hut": "Heaphy",
+  "type": "Campsite",
+  "cap": "40",
+  "waypoint": "60.2"
+},
+{
+  "hut": "Katipo Creek Shelter",
+  "type": "Campsite",
+  "cap": "10",
+  "waypoint": "60.2"
+},
+{
+  "hut": "Scotts Beach",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "60.2"
+},
+{
+  "hut": "Kohaihai",
+  "type": "Campsite",
+  "cap": "50",
+  "waypoint": "76.4"
+}
+]},
+{"name":"Lake Waikaremoana", "huts":[{
+  "hut": "Panekire",
+  "type": "Hut",
+  "cap": "36",
+  "waypoint": ""
+},
+{
+  "hut": "Waiopaoa",
+  "type": "Hut",
+  "cap": "30",
+  "waypoint": "16.4"
+},
+{
+  "hut": "Waiopaoa",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "16.4"
+},
+{
+  "hut": "Korokoro",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "20"
+},
+{
+  "hut": "Maraunui",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "26.8"
+},
+{
+  "hut": "Marauiti",
+  "type": "Hut",
+  "cap": "25",
+  "waypoint": "28.5"
+},
+{
+  "hut": "Waiharuru",
+  "type": "Hut",
+  "cap": "40",
+  "waypoint": "34.7"
+},
+{
+  "hut": "Waiharuru",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "34.7"
+},
+{
+  "hut": "Tapuaenui",
+  "type": "Campsite",
+  "cap": "20",
+  "waypoint": "36.8"
+},
+{
+  "hut": "Whanganui Hut",
+  "type": "Hut",
+  "cap": "18",
+  "waypoint": "44.2"
+}]}]`;
+
+
 const kms = [
   '1',
   '2',

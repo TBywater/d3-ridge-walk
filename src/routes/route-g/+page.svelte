@@ -2,6 +2,7 @@
   import { area, curveBasis, extent, max, quantize, interpolateCool, scaleLinear, scalePoint, scaleTime} from 'd3';
   import data from './ridgeline-data' // or pass data to component as prop
   import { fade, blur, fly, slide, scale } from "svelte/transition";
+  import * as easingFunctions from 'svelte/easing';
   import { flip } from 'svelte/animate';
 
   
@@ -12,19 +13,23 @@
   const marginTop = 40; // the top margin, in pixels
   const marginRight = 0; // the right margin, in pixels
   const marginBottom = 40; // the bottom margin, in pixels
-  const marginLeft = 60; // the left margin, in pixels
-  const yAxisOffset = 0; // vertical offset of y-axis labels, in pixels
+  const marginLeft = 100; // the left margin, in pixels
+  const yAxisOffset = -5; // vertical offset of y-axis labels, in pixels
   let Track = ''
   let Cola = 'rgb(54, 140, 225)'
   let Pat = ''
+  let hScale = 1
+
+	let show = true
 
   console.log("data:", data.kms);
 
   const xScale = scaleLinear()
     .domain(data.kms)
-    .range([width, width - marginRight-15]);
+    .range([30,60, 75
+    ]);
 
-    //[width, width - marginRight-15]
+    //[fwidth, width - marginRight-15 or 20, 45 , marginLeft]
 
   const yScale = scalePoint()
     .domain(data.series.map(d => d.name))
@@ -68,8 +73,8 @@ function simulateNavigation() {
 	};
 
 
-
 </script>
+
 
 <h1 class:active on:mouseenter={() => {
 	console.log("enter", navigating);
@@ -96,10 +101,11 @@ on:mouseleave={() => {
   <svg {width} {height} viewBox="0 0 {width + marginLeft} {height}">
     <g class="y-axis" transform="translate({marginLeft}, 0)">
       {#each data.series as series, i}
-        <g class="y-tick" transform="translate({marginLeft - 10}, {yScale(series.name)})">
+        <g class="y-tick" transform="translate({marginLeft - 50}, {yScale(series.name)})">
+          <text x="-50" y={yAxisOffset}>{series.name}</text>
           <line class="tick-start" x1={marginLeft - 6} x2={marginLeft}/>
           <line class="tick-grid" x1={marginLeft} x2={width - marginLeft - marginRight}/>
-          <text y={yAxisOffset}>{series.name}</text>
+          
         </g>
       {/each}
     </g>
@@ -114,8 +120,8 @@ on:mouseleave={() => {
     </g>
       
       {#each data.series as series, i}
-        <g class='ridgelines' transform="translate({marginLeft}, {yScale(series.name) + 1})">
-          <path
+        <g class='ridgelines' transform="translate({marginLeft} , {yScale(series.name) + 1})">
+          <path 
 
               d={areaFunc(series.values)}
               on:mouseenter={() => {
@@ -130,7 +136,8 @@ on:mouseleave={() => {
                   active = false;
                 }
               }} on:click={(event) => Track = event.target.id} on:click={simulateNavigation}
-              on:mouseenter|self={(event) => event.target.style.transform = "scaleY(1.5)"}
+              on:mouseenter|self={(event) => event.target.style.transform = "scaleY(1.5)" }
+         
               
               on:mouseleave|self={(event) => event.target.style.transform = "scaleY(1)"}
               on:mouseenter={(event) => Cola = event.target.attributes["fill"].value}
@@ -139,16 +146,37 @@ on:mouseleave={() => {
               name={colors[i]}
               id={series.name}
               cursor = pointer
-              
-              use = animationAction              
+
+                            
           ></path>
+          
+<!--    // This below: use navigating to bring up huts data / outline for selected
+        {#if navigating}
           <path
               stroke='black'
               fill='none'
               d={lineFunc(series.values)}
+              in:fade={{ duration: 2000 }}
+              out:fade={{ duration: 2000 }}></path>
 
-          ></path>
+          
+          {:else}
+          
+          {/if}
+            -->
+
+            {#if navigating}
+            {(event) => event.target.style.stroke = 'black'
+            
+             }
+          
+          {:else}
+          
+          {/if}
+
+
         </g>
+        
       {/each}
   </svg>
 </div>
